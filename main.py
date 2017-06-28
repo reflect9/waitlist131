@@ -34,20 +34,9 @@ class Evalution(ndb.Model):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         template_values = {}
-        template = JINJA_ENVIRONMENT.get_template('crowd.html')
+        template = JINJA_ENVIRONMENT.get_template('main.html')
         html = template.render(template_values)
         self.response.out.write(html)
-class CollectGoodEmailsHandler(webapp2.RequestHandler):
-    def get(self):
-        pass
-        
-class CollectBadEmailsHandler(webapp2.RequestHandler):
-    def get(self):
-        pass
-        
-class CollectNeutralEmailsHandler(webapp2.RequestHandler):
-    def get(self):
-        pass
         
 class EvaluateRelevanceHandler(webapp2.RequestHandler):
     def get(self):
@@ -71,10 +60,7 @@ class SetupHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ## PUBLIC PAGES
     ('/', MainHandler),
-    ##### COLLECTING EMAILS
-    ('/collectGoodEmails', CollectGoodEmailsHandler),
-    ('/collectBadEmails', CollectBadEmailsHandler),
-    ('/collectNeutralEmails', CollectNeutralEmailsHandler),
+    ('/survey', MainHandler),
     ##### EVALUATING EMAIL and LANDING PAGE RELEVANCE
     ('/evaluateRelevance', EvaluateRelevanceHandler),
     ## INTERNAL SERVICES

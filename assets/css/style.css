@@ -1,0 +1,47 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background-color: #222;
+}
+.footer {
+  width: 100%;
+  background-color: #222;
+}
+.footer .footer_content {
+  max-width: 800px;
+  text-align: left;
+  font-size: 0.7em;
+  margin: auto;
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #888;
+}
+.btn-green {
+  background-color: #1ab394;
+  color: #fff;
+  border-radius: 3px;
+}
+.btn-green:hover,
+.btn-green:focus {
+  background-color: #18a689;
+  color: #fff;
+}
+.panel-footer {
+  text-align: right;
+  background-color: #fff;
+}
+.main_container {
+  background-color: #2f4050;
+  height: 100%;
+}
+.survey_wrapper {
+  max-width: 800px;
+  margin: auto;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+  background-color: white;
+}
+.survey_wrapper .question {
+  margin-top: 30px;
+}

@@ -1,0 +1,58 @@
+@green : #1ab394;
+@darkblue: #2f4050;
+@dark : #333;
+@light: #f4f4f4;
+@bgColor: #222;
+@content-width: 800px;
+
+html, body{
+    margin: 0;
+    height: 100%;
+    background-color:@bgColor;
+}
+.footer{
+    width:100%;
+    background-color:@bgColor;
+    .footer_content{
+        max-width: @content-width;
+        text-align:left;
+        font-size:0.7em;
+        margin:auto;
+        padding-top:10px;
+        padding-left:10px;
+        color:#888;
+    }
+}
+
+.btn-green {
+    background-color: #1ab394;
+    color: #fff;
+    border-radius: 3px;
+}
+
+.btn-green:hover, .btn-green:focus {
+    background-color: #18a689;
+    color: #fff;
+}
+
+.panel-footer {
+    text-align: right;
+    background-color: #fff;
+}
+.main_container{
+    // margin:0px 20px 0px 20px;
+    background-color:@darkblue;
+    height:100%;
+}
+
+
+.survey_wrapper {
+    max-width:@content-width;
+    margin:auto;
+    border-left:1px solid #eee;
+    border-right:1px solid #eee;
+    background-color:white;
+    .question {
+        margin-top:30px;
+    }
+}

@@ -1,0 +1,46 @@
+// SOME CLI USAGE
+// - TO GO TO DEV DIRECTORY
+// cd /Users/takyeonlee/Documents/study/Adobe\ Internship\ 2017/CrowdLinkRelevance/waitlist131
+// - TO TURN ON MONITORING SOURCE CHANGE (https://webpack.js.org/guides/development/)
+//       ./node_modules/.bin/webpack --progress --watch
+// 
+
+import React, { Component } from 'react';
+import ReactDOM, { render } from 'react-dom';
+import { 
+    BrowserRouter as Router, 
+    Route,
+    Link
+} from 'react-router-dom';
+import SurveyPage from './surveyPage.js';
+import surveyJSON from './surveyJSON.js';
+
+class Home extends Component{
+    render() {
+        return (<h1>Hiiii</h1>);
+    }
+}
+
+class Work extends Component{
+    render() {
+        return (<h1>Work</h1>);
+    }   
+}
+const SurveyPageWrapper = () => {
+    return (<div>
+        <SurveyPage json={surveyJSON} />
+    </div>);
+};
+
+render (
+    <Router>
+        <div className='main_container' >
+            <Route exact path='/' component = {Home}/>
+            <Route path='/survey' component = {SurveyPageWrapper}/>
+            <Route path='/work' component = {Work}/>
+        </div>
+    </Router>,
+    document.getElementById("container")
+); 
+
+

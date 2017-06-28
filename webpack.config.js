@@ -9,13 +9,13 @@ module.exports = {
     //the entry point we created earlier. Note that './' means 
     //your current directory. You don't have to specify the extension  now,
     //because you will specify extensions later in the `resolve` section
-    entry: "./assets/js/index.js", 
+    entry: "./assets/js/main.js", 
     
     output: {
         //where you want your compiled bundle to be stored
         path: path.resolve('./assets/bundles/'), 
         //naming convention webpack should use for your files
-        filename: '[name].js', 
+        filename: '[name].bundle.js', 
     },
     
     plugins: [
@@ -54,5 +54,6 @@ module.exports = {
         ],
         //extensions that should be used to resolve modules
         extensions: ['.js', '.jsx'] 
-    }   
+    }   ,
+    devtool: 'source-map'
 }
