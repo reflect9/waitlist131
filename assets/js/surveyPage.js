@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as Survey from 'survey-react';
 
-
 class SurveyPage extends Component{
     constructor(props) {
         super(props);
@@ -9,6 +8,7 @@ class SurveyPage extends Component{
         this.json = props.json;
         Survey.Survey.cssType = "bootstrap";
         Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
+        Survey.defaultBootstrapCss.progressBar = "btn-green";
     }
     sendDataToServer(survey) {
         var resultAsString = JSON.stringify(survey.data);

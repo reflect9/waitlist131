@@ -1,4 +1,5 @@
 // SOME CLI USAGE
+
 // - TO GO TO DEV DIRECTORY
 // cd /Users/takyeonlee/Documents/study/Adobe\ Internship\ 2017/CrowdLinkRelevance/waitlist131
 // - TO TURN ON MONITORING SOURCE CHANGE (https://webpack.js.org/guides/development/)
@@ -14,6 +15,7 @@ import {
 } from 'react-router-dom';
 import SurveyPage from './surveyPage.js';
 import surveyJSON from './surveyJSON.js';
+import $ from 'jquery';
 
 class Home extends Component{
     render() {
@@ -44,3 +46,12 @@ render (
 ); 
 
 
+
+// ADDING EVENTHANDLER FOR CLIENT CHOICE
+for(var el of document.querySelectorAll("button.btn-client")){
+    el.addEventListener("click", function(event){
+        var client = event.target.getAttribute("ec");
+        $("div.inst-client").addClass("hidden");
+        $("div.inst-client[ec='"+client+"'").removeClass("hidden");
+    });
+}
