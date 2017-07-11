@@ -16,6 +16,7 @@ import {
 import SurveyPage from './surveyPage.js';
 import surveyJSON from './surveyJSON.js';
 import $ from 'jquery';
+import * as Utils from './utils.js';
 
 class Home extends Component{
     render() {
@@ -30,13 +31,13 @@ class Work extends Component{
 }
 const SurveyPageWrapper = () => {
     return (<div>
-        <SurveyPage json={surveyJSON} />
+        <SurveyPage json={surveyJSON} userid={Utils.makeid()}/>
     </div>);
 };
 
 render (
     <Router>
-        <div className='main_container' >
+        <div className='reactMain' >
             <Route exact path='/' component = {Home}/>
             <Route path='/survey' component = {SurveyPageWrapper}/>
             <Route path='/work' component = {Work}/>

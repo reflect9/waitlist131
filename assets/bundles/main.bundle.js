@@ -11234,9 +11234,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__surveyPage_js__ = __webpack_require__(224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__surveyJSON_js__ = __webpack_require__(226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jquery__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__surveyJSON_js__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jquery__ = __webpack_require__(228);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_js__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__utils_js__);
 // SOME CLI USAGE
 
 // - TO GO TO DEV DIRECTORY
@@ -11244,6 +11246,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // - TO TURN ON MONITORING SOURCE CHANGE (https://webpack.js.org/guides/development/)
 //       ./node_modules/.bin/webpack --progress --watch
 // 
+
 
 
 
@@ -11275,7 +11278,7 @@ const SurveyPageWrapper = () => {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__surveyPage_js__["a" /* default */], { json: __WEBPACK_IMPORTED_MODULE_4__surveyJSON_js__["a" /* default */] })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__surveyPage_js__["a" /* default */], { json: __WEBPACK_IMPORTED_MODULE_4__surveyJSON_js__["a" /* default */], userid: __WEBPACK_IMPORTED_MODULE_6__utils_js__["makeid"]() })
     );
 };
 
@@ -11284,7 +11287,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom__["render"](__WEBPACK_IMPORTED_MODULE_0_re
     null,
     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'main_container' },
+        { className: 'reactMain' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { exact: true, path: '/', component: Home }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { path: '/survey', component: SurveyPageWrapper }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Route */], { path: '/work', component: Work })
@@ -25790,36 +25793,88 @@ NavLink.defaultProps = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(7);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_survey_react__ = __webpack_require__(225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_survey_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_survey_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_js__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__utils_js__);
+
 
 
 
 class SurveyPage extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     constructor(props) {
         super(props);
-        this.sendDataToServer = this.sendDataToServer.bind(this);
         this.json = props.json;
+        this.userid = props.userid;
         __WEBPACK_IMPORTED_MODULE_1_survey_react__["Survey"].cssType = "bootstrap";
         __WEBPACK_IMPORTED_MODULE_1_survey_react__["defaultBootstrapCss"].navigationButton = "btn btn-green";
         __WEBPACK_IMPORTED_MODULE_1_survey_react__["defaultBootstrapCss"].progressBar = "btn-green";
+        this.processHtml = this.processHtml.bind(this);
+        this.sendDataToServer = this.sendDataToServer.bind(this);
+    }
+    // Preprocess HTML of the completion page based on the data
+    processHtml(survey, options) {
+        // If the survey was completed because participants picked "Others" as their browser
+        // then show a message that says 'sorry'. 
+        if (survey.isCompleted) {
+            if (survey.data.browser.indexOf("other") != -1) {
+                options.html = `<div class='surveyResult' style='height:300px; padding:30px;'>
+                    <h3>We are sorry. To participate this survey, you need to use either Chrome, Firefox, or Safari.</h3>
+                    <button class='btn btn-success' onClick='window.location.href="/survey"'>Start Over</button>
+                </div>`;
+                console.log(options);
+            } else {
+                options.html = `<div class='surveyResult' style='height:300px; padding:30px;'>
+                    <h3>Thank you for helping us! <br> Here is your completion code: <em style='color:red'>${this.userid}</em>
+                    <br> Don't forget to copy the completion code if you came from Amazon Mechanical Turk.
+                    </h3>
+                </div>`;
+            }
+        } else {
+            // The survey is not finished yet.
+            // Show browser-specific guide in the page3
+            if (survey.currentPageValue.name === "page3") {
+                options.html = options.html.replace("{{instructionForBrowser}}", this.json.etc.instructionForBrowser[survey.data.browser]);
+            } else {}
+            console.log(options);
+        }
     }
     sendDataToServer(survey) {
-        var resultAsString = JSON.stringify(survey.data);
-        alert(resultAsString); //send Ajax request to your web server.
+        // DONT SUBMIT IF THE SURVEY WAS TERMINATED FOR USING OTHER CLIENTS
+        if (survey.data.emailClient == "others") return;
+        // SUBMITTING PROCESS
+        console.log(survey.data);
+        $.ajax({
+            url: "survey/submit",
+            data: {
+                json: JSON.stringify(survey.data),
+                userid: this.userid
+            },
+            method: "POST",
+            cache: false,
+            success: function (data) {
+                // 
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     }
     render() {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'survey_wrapper' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_survey_react__["Survey"], { json: this.json, onComplete: this.sendDataToServer })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_survey_react__["Survey"], { json: this.json,
+                onComplete: this.sendDataToServer,
+                onProcessHtml: this.processHtml })
         );
     }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (SurveyPage);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(228)))
 
 /***/ }),
 /* 225 */
@@ -25834,36 +25889,23 @@ class SurveyPage extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 
 /***/ }),
 /* 226 */
+/***/ (function(module, exports) {
+
+function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+exports.makeid = makeid;
+
+/***/ }),
+/* 227 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// var introHTML = `
-//     <div>
-//         <div class='lead'>
-//             Which email client do you use? 
-//             <br>
-//             <center style='margin:20px 0 20px 0'>
-//                 <button class='btn btn-success btn-client' id='dddd' ec='gmail'>Gmail</button>&nbsp;&nbsp;
-//                 <button class='btn btn-success btn-client' ec='yahoo'>Yahoo! Mail</button>&nbsp;&nbsp;
-//                 <button class='btn btn-success btn-client' ec='outlook'>Microsoft Outlook</button>
-//                 <button class='btn btn-success btn-client' ec='other'>Other</button>
-//             </center>
-//             <div class='inst-client hidden' ec='gmail'>
-//                 Open your email client. Go to the folder where promotion emails are stored. If you are using Gmail, it would be 'Promotions' folder.
-//             </div>
-//             <div class='inst-client hidden' ec='yahoo'>
-//                 Open your email client. Go to the folder where promotion emails are stored.
-//             </div>
-//             <div class='inst-client hidden' ec='outlook'>
-//                 Open your email client. Go to the folder where promotion emails are stored.
-//             </div>
-//             <div class='inst-client hidden' ec='other'>
-//                 I am sorry that you cannot participate this study without using one of the three clients listed above.   
-//             </div> 
-//         </div>
-//     </div>
-// `;
-
 var instruction_promotion_folder = `
     <div class='lead'>
          Open your email client, and go to the folder where promotion emails are stored. If you are using Gmail, it would be 'Promotions' folder.
@@ -25871,68 +25913,119 @@ var instruction_promotion_folder = `
 `;
 var instruction_raw_message = `
     <div style='margin-top:20px;'>
-        <p class='lead'>We need a promotion email that you found most attractive.</p>
-        <p>Preferrably, you have opened it already. However, if you did not open a promotion email recently, pick one that looks attractive now. </p>
-        <p class='lead'>    
-            Did you find an email? 
-            First of all, we want you to copy and past the raw message of it. 
-            To do that, please follow the instruction below.  
-            Which email client do you use? 
-            <br>
-            <center style='margin:20px 0 20px 0'>
-                <button class='btn btn-success btn-client' id='dddd' ec='gmail'>Gmail</button>&nbsp;&nbsp;
-                <button class='btn btn-success btn-client' ec='yahoo'>Yahoo! Mail</button>&nbsp;&nbsp;
-                <button class='btn btn-success btn-client' ec='outlook'>Microsoft Outlook</button>
-                <button class='btn btn-success btn-client' ec='other'>Other</button>
-            </center>
+        <p class='lead'>We need a promotion email that you found attractive.
+         The email can be either previosuly opened or what looks interesting now.
+         Once you find an attractive email, please follow the instruction below to 
+        copy-paste HTML of the email.  
         </p>    
-        </div>
-        <div id='inst-get-raw-message'>
-            <div class='inst-client ' ec='gmail'>
-                <img src='assets/images/gmail.gif' style='width:80%;'>
-            </div>
-            <div class='inst-client ' ec='yahoo'>
-                <img src='assets/images/yahoo.gif' style='width:80%;'>
-            </div>
-            <div class='inst-client ' ec='outlook'>
-                <img src='assets/images/outlook.gif' style='width:80%;'>
-            </div>
-            <div class='inst-client ' ec='outlook'>
-                Sorry you cannot.
-            </div>
-        </div>
-        
+        {{instructionForBrowser}}
     </div>
 `;
+var instructionForBrowser = {
+    "chrome": `<div class='inst-client'>
+            If you are using Chrome,
+            <ol>
+                <li>Open the email that you chose, and right-click at the top of the email content</li>
+                <li>Press "Inspect Element"
+                    <br><img src='assets/images/chrome-step-1.png' width="650px" '>
+                </li>
+                <li>Click the inspect button in the Developer panel
+                    <br><img src='assets/images/chrome-step-2.png' width="650px">
+                </li>
+                <li>Click the top of the email so that the entire content will be highlighted
+                    <br><img src='assets/images/chrome-step-3.png'  width="650px">
+                </li>
+                <li>Right-click the currently selected element in the developer panel</li>
+                <li>Press "Copy" > "Copy OuterHTML"
+                    <br><img src='assets/images/chrome-step-4.png'  width="650px">
+                </li>
+            </ol>
+        </div>`,
+    "safari": `<div class='inst-client'>
+            If you are using Safari,
+            <ol>
+                <li>Open the preference of Safari browser
+                    <br><img src='assets/images/safari-pref-1.png' width="650px">
+                </li>
+                <li>Make sure "Advanced" > "Show Develop menu in menu bar" is checked
+                    <br><img src='assets/images/safari-pref-2.png' width="650px">
+                </li>
+                <li>Open the email that you chose, and right-click at the top of the email content</li>
+                <li>Press "Inspect Element"
+                    <br><img src='assets/images/safari-step-1.png' width="650px" '>
+                </li>
+                <li>Click the crosshair button in the Developer panel
+                    <br><img src='assets/images/safari-step-2.png' width="650px">
+                </li>
+                <li>Click the top of the email so that the entire content will be highlighted
+                    <br><img src='assets/images/safari-step-3.png'  width="650px">
+                </li>
+                <li>Right-click the currently selected element in the developer panel</li>
+                <li>Click "Copy as HTML"
+                    <br><img src='assets/images/safari-step-4.png'  width="650px">
+                </li>
+            </ol>
+        </div>`,
+    "firefox": `<div class='inst-client'>
+            If you are using Firefox,
+            <ol>
+                <li>Open the email that you chose, and right-click at the top of the email content</li>
+                <li>Press "Inspect Element"
+                    <br><img src='assets/images/firefox-step-1.png' width="650px" '>
+                </li>
+                <li>Click the inspect button in the Developer panel
+                    <br><img src='assets/images/firefox-step-2.png' width="650px">
+                </li>
+                <li>Click the top of the email so that the entire content will be highlighted
+                    <br><img src='assets/images/firefox-step-3.png'  width="650px">
+                </li>
+                <li>Right-click the currently selected element in the developer panel</li>
+                <li>Press "Copy" > "OuterHTML"
+                    <br><img src='assets/images/firefox-step-4.png'  width="650px">
+                </li>
+            </ol>
+        </div>`
+};
 
 var surveyJSON = {
-    title: "A Survey of Promotion Emails",
-    triggers: [{ type: "complete", name: "emailClient", operator: "equal", value: "Others (You cannot complete this HIT)" }],
+    title: "A Survey about Promotion Emails",
+    triggers: [{ type: "complete", name: "browser", operator: "equal", value: "other" }],
     pages: [{
-        name: "page1", questions: [{
-            name: "emailClient", type: "radiogroup", title: "Which email client do you use?",
-            colCount: 4, choices: ["Gmail", "Yahoo!", "Outlook", "Others (You cannot complete this HIT)"], isRequired: true
+        name: "page1",
+        title: `We are researchers who study how people perceive values of promotion emails. 
+              In this survey, you will answer a few questions about promotion emails that you received.
+              `,
+        questions: [{ name: "emailClient", type: "radiogroup", title: "Which email client do you mainly use?",
+            colCount: 4, choices: [{ value: "gmail", text: "Gmail" }, { value: "yahoo", text: "Yahoo! Mail" }, { value: "outlook", text: "Microsoft Outlook" }],
+            hasOther: true,
+            isRequired: true
+        }, { name: "browser", type: "radiogroup", title: "Which browser do you use to access your emails? To participate, you need to use either Chrome, Firefox, or Safari browser.",
+            colCount: 4, choices: [{ value: "chrome", text: "Chrome" }, { value: "safari", text: "Safari" }, { value: "firefox", text: "Firefox" }],
+            hasOther: true,
+            isRequired: true
         }]
     }, {
-        title: "General Questions: go to the promotion folder",
         name: "page2", questions: [{ name: "inst_folder", type: "html", html: instruction_promotion_folder }, {
-            name: "numEmails", type: "radiogroup", title: "How many promotion emails do you receive per day?",
-            colCount: 2, choices: ["0", "1-5", "6-20", "21-50", "51-100", "100-"], isRequired: true
-        }, { name: "freqOpenEmails", type: "radiogroup", title: "How often do you open promotion emails per week?", colCount: 2, choices: ["Never open promotion emails", "1-5 promotion emails per week", "6-20 promotion emails per week", "20-50 promotion emails per week", "50-100 promotion emails per week", "More than 100 emails"], isRequired: true }, { name: "importantReason", type: "checkbox", title: "What do you consider when opening promotion emails? Pick all that matter, or describe other reasons.", isRequired: true, colCount: 2, hasOther: true, choices: ["Brand", "Value of the offer", "Limited-time offer", "Targeted offer"], choicesOrder: "random" }]
+            name: "numEmails", type: "radiogroup", title: "How many promotion emails do you receive (approximately) per day?",
+            colCount: 3, choices: ["0", "1-5", "6-20", "21-50", "51-100", "100-"],
+            isRequired: true
+        }, { name: "freqOpenEmails", type: "radiogroup", title: "How often do you open promotion emails (approximately) per week?",
+            colCount: 3, choices: ["0|Rarely open any promotion email", "1-5|1-5", "6-20|6-20", "20-50|20-50", "50-100|50-100", "100-|More than 100 emails"], isRequired: true }, { name: "importantReasons", type: "checkbox", title: "What do you consider when opening promotion emails? Pick all that matter, or describe other reasons.", isRequired: true, colCount: 3, hasOther: true,
+            choices: ["Brand", "Value of the offer", "Limited-time offer", "Targeted offer"], choicesOrder: "random" }]
     }, {
-        name: "page3", questions: [{ name: "inst2", type: "html", html: instruction_raw_message }, { name: "rawMessage", type: "comment", title: "" }]
+        name: "page3", questions: [{ name: "inst2", type: "html", html: instruction_raw_message }, { name: "rawMessage", title: "Paste the email's raw message.", type: "comment", isRequired: true }]
     }],
-    showProgressBar: "top",
     showCompletedPage: true,
-    completedHtml: `<div style='height:300px; padding:30px;'>
-        <h3>Thank you for helping us! <br> Here is your completion code.</h3>
-    </div>`
+    completedHtml: `/* WILL BE PREOCESSED IN the processHtml method */`,
+    etc: {
+        instructionForBrowser: instructionForBrowser
+    }
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (surveyJSON);
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
