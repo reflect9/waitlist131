@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MANAGING DATASTORE BACKUP FOR LOCAL DEV SERVER</title>
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">        
+        <link rel="stylesheet" href="assets/css/style.css">        
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    </style>
+    </head>
+    <body>
+        <ul>
+            {% for backup in availableBackups %}
+            <li>
+                {{backup.directory}}
+                <ul>
+                    {% for file in backup.files %}
+                    <li><a onClick='requestRestore("{{file}}");'>{{file}}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+<script>
+function requestRestore(path) {
+    $.get("restore",{
+        "path":path,
+        "className": "SurveyData"
+    },function(result)  {
+        alert(result);
+    });
+}
+</script>
+
+
+</body>
+
+
+</html>

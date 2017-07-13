@@ -1,0 +1,64 @@
+[INFO     2017-07-12 10:56:38,194 bulkloader.py] Logging to bulkloader-log-20170712.105638
+[INFO     2017-07-12 10:56:38,195 bulkloader.py] Throttling transfers:
+[INFO     2017-07-12 10:56:38,195 bulkloader.py] Bandwidth: 250000 bytes/second
+[INFO     2017-07-12 10:56:38,195 bulkloader.py] HTTP connections: 8/second
+[INFO     2017-07-12 10:56:38,195 bulkloader.py] Entities inserted/fetched/modified: 20/second
+[INFO     2017-07-12 10:56:38,195 bulkloader.py] Batch Size: 10
+[INFO     2017-07-12 10:56:38,195 bulkloader.py] Opening database: bulkloader-progress-20170712.105638.sql3
+[INFO     2017-07-12 10:56:38,222 bulkloader.py] Opening database: bulkloader-results-20170712.105638.sql3
+[DEBUG    2017-07-12 10:56:38,250 adaptive_thread_pool.py] [WorkerThread-0] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,250 adaptive_thread_pool.py] [WorkerThread-1] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,251 adaptive_thread_pool.py] [WorkerThread-2] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,251 adaptive_thread_pool.py] [WorkerThread-3] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,251 adaptive_thread_pool.py] [WorkerThread-4] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,251 adaptive_thread_pool.py] [WorkerThread-5] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,251 adaptive_thread_pool.py] [WorkerThread-6] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,252 adaptive_thread_pool.py] [WorkerThread-7] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,252 adaptive_thread_pool.py] [WorkerThread-8] WorkerThread: started
+[DEBUG    2017-07-12 10:56:38,252 bulkloader.py] Configuring remote_api. url_path = /_ah/remote_api/, servername = waitlist131.appspot.com
+[DEBUG    2017-07-12 10:56:38,269 adaptive_thread_pool.py] [WorkerThread-9] WorkerThread: started
+[DEBUG    2017-07-12 10:56:39,587 bulkloader.py] Bulkloader using app_id: s~waitlist131
+[INFO     2017-07-12 10:56:39,587 bulkloader.py] Connecting to waitlist131.appspot.com/_ah/remote_api/
+[DEBUG    2017-07-12 10:56:41,354 bulkloader.py] [Thread-11] ExportProgressThread: started
+[DEBUG    2017-07-12 10:56:41,354 bulkloader.py] [Thread-12] DataSourceThread: started
+[INFO     2017-07-12 10:56:41,354 bulkloader.py] Downloading kinds: [u'SurveyData']
+[DEBUG    2017-07-12 10:56:41,367 bulkloader.py] [Thread-12] DataSourceThread: exiting
+[DEBUG    2017-07-12 10:56:41,373 bulkloader.py] Waiting for worker threads to finish...
+[DEBUG    2017-07-12 10:56:41,387 adaptive_thread_pool.py] [WorkerThread-0] Got work item SurveyData-ASC[None to None]
+[DEBUG    2017-07-12 10:56:41,745 bulkloader.py] bulkloader-results-20170712.105638.sql3 insert: delta=0.004
+[DEBUG    2017-07-12 10:56:41,745 bulkloader.py] Entities transferred total: 10
+[DEBUG    2017-07-12 10:56:41,752 bulkloader.py] delete: delta=0.000
+[DEBUG    2017-07-12 10:56:41,762 bulkloader.py] [WorkerThread-0] SurveyData-ASC[None to None] Transferred 10 entities in 0.3 seconds
+[DEBUG    2017-07-12 10:56:41,762 adaptive_thread_pool.py] Increasing active thread count to 2
+[DEBUG    2017-07-12 10:56:41,763 adaptive_thread_pool.py] [WorkerThread-0] Got work item SurveyData-DESC(datastore_types.Key.from_path(u'SurveyData', 5682617542246400L, _app=u's~waitlist131') to None]
+[INFO     2017-07-12 10:56:41,997 bulkloader.py] SurveyData: No descending index on __key__, performing serial download
+[DEBUG    2017-07-12 10:56:42,468 bulkloader.py] bulkloader-results-20170712.105638.sql3 insert: delta=0.003
+[DEBUG    2017-07-12 10:56:42,468 bulkloader.py] Entities transferred total: 16
+[DEBUG    2017-07-12 10:56:42,484 bulkloader.py] delete: delta=0.000
+[DEBUG    2017-07-12 10:56:42,491 bulkloader.py] [WorkerThread-0] SurveyData-ASC(datastore_types.Key.from_path(u'SurveyData', 5682617542246400L, _app=u's~waitlist131') to None] Transferred 6 entities in 0.7 seconds
+[DEBUG    2017-07-12 10:56:42,491 adaptive_thread_pool.py] Increasing active thread count to 3
+[DEBUG    2017-07-12 10:56:42,499 adaptive_thread_pool.py] [WorkerThread-8] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,500 adaptive_thread_pool.py] [WorkerThread-7] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,500 adaptive_thread_pool.py] [WorkerThread-3] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,500 adaptive_thread_pool.py] [WorkerThread-9] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,500 adaptive_thread_pool.py] [WorkerThread-2] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,500 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,500 adaptive_thread_pool.py] [WorkerThread-6] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,500 adaptive_thread_pool.py] [WorkerThread-4] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,501 adaptive_thread_pool.py] [WorkerThread-1] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,507 adaptive_thread_pool.py] [WorkerThread-0] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,508 adaptive_thread_pool.py] [WorkerThread-5] WorkerThread: exiting
+[DEBUG    2017-07-12 10:56:42,508 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,508 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 adaptive_thread_pool.py] Waiting for Anonymous_WorkerThread to exit
+[DEBUG    2017-07-12 10:56:42,509 bulkloader.py] Waiting for progress_thread to terminate...
+[DEBUG    2017-07-12 10:56:42,526 bulkloader.py] [Thread-11] ExportProgressThread: exiting
+[DEBUG    2017-07-12 10:56:42,529 bulkloader.py] ... done.
+[INFO     2017-07-12 10:56:42,539 bulkloader.py] Have 16 entities, 0 previously transferred
+[INFO     2017-07-12 10:56:42,539 bulkloader.py] 16 entities (668888 bytes) transferred in 4.3 seconds

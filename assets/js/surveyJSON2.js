@@ -5,20 +5,19 @@ var instruction_promotion_folder = `
 `;
 var instruction_raw_message = `
     <div style='margin-top:20px;'>
-        <p class='lead'>We need a promotion email that you found attractive.
-         The email can be either previosuly opened or what looks interesting now.
-         Once you find an attractive email, please follow the instruction below to 
-        copy-paste HTML of the email.  
-        </p>    
+        <p class='lead'>We are collecting promotion emails that are inconsistent with linked pages.
+        Try links in a promotion email. Check if the landing pages are exactly what you expected. </p>
+        <p>If all the links are relevant, please try another email.</p>
+        <p>If you found any unexpected landing page, follow the instruction below to copy-paste HTML of the email.
         {{instructionForBrowser}}
+        </p>    
     </div>
 `;
 var instructionForBrowser = {
     "chrome":`<div class='inst-client'>
             If you are using Chrome,
             <ol>
-                <li>Open the email that you chose</li>
-                <li>Right-click on the email, and Press "Inspect Element"
+                <li>Right-click the email content, and Press "Inspect Element"
                     <br><img src='assets/images/chrome-step-1.png' width="650px" '>
                 </li>
                 <li>Click the first button in the Developer panel
@@ -42,8 +41,7 @@ var instructionForBrowser = {
                 <li>Make sure "Advanced" > "Show Develop menu in menu bar" is checked
                     <br><img src='assets/images/safari-pref-2.png' width="650px">
                 </li>
-                <li>Open the email that you chose</li>
-                <li>Right-click on the email, and Press "Inspect Element"
+                <li>Right-click the email content, and Press "Inspect Element"
                     <br><img src='assets/images/safari-step-1.png' width="650px" '>
                 </li>
                 <li>Click the crosshair button in the Developer panel. Make sure the icon is turned on.
@@ -61,8 +59,7 @@ var instructionForBrowser = {
     "firefox":`<div class='inst-client'>
             If you are using Firefox,
             <ol>
-                <li>Open the email that you chose</li>
-                <li>Right-click on the email, and Press "Inspect Element"
+                <li>Right-click the email content, and Press "Inspect Element"
                     <br><img src='assets/images/firefox-step-1.png' width="650px" '>
                 </li>
                 <li>Click the inspect button in the Developer panel
@@ -81,7 +78,7 @@ var instructionForBrowser = {
 
 
 
-var surveyJSON = { 
+var surveyJSON_Irrelevant = { 
     title:"A Survey about Promotion Emails",
     triggers: [
         {  type:"complete", name: "browser", operator:"equal", value:"other"}
@@ -136,8 +133,12 @@ var surveyJSON = {
                 { name: "inst2", type:"html", html: instruction_raw_message },
                 { name: "emailHTML", title:"Paste the email's HTML that you copied through the above steps.", type: "comment", isRequired:true  },
                 { name: "emailSubject", title:"Copy and Paste the email's subject line", type: "text", isRequired:true  },
-                { name: "emailReason", type: "checkbox", title: "Why is the email attractive to you? Pick all that matter, or describe other reasons.", isRequired:true, colCount:3, hasOther:true, 
-                    choices: ["Trustworthiness","Brand", "Value of the offer", "Limited-time offer", "Targeted offer"], choicesOrder:"random"  }
+                { name: "emailDate", title:"When did you receive the email?", type: "datetime", isRequired:true  },
+                { name: "emailLink", title:"Describe the anchor text(or describe image) in the email you clicked that led to the irrelevant landing page.", type: "text", isRequired:true  },
+                { name: "emailReason", title:"Briefly explain why you think the link is irrelevant", type: "text", isRequired:true  },
+                { name: "emailSeverity", type: "rating", title: "To what extent did the link negatively impact your impression of the advertisement?", 
+                    mininumRateDescription: "No impact at all", maximumRateDescription: "Strong negative impact",
+                    isRequired: true },
             ]
         }
         
@@ -149,4 +150,4 @@ var surveyJSON = {
     }
 };
 
-export default surveyJSON;
+export default surveyJSON_Irrelevant;

@@ -1,0 +1,19 @@
+[INFO     2017-07-12 10:55:32,691 bulkloader.py] Logging to bulkloader-log-20170712.105532
+[INFO     2017-07-12 10:55:32,691 bulkloader.py] Throttling transfers:
+[INFO     2017-07-12 10:55:32,692 bulkloader.py] Bandwidth: 250000 bytes/second
+[INFO     2017-07-12 10:55:32,692 bulkloader.py] HTTP connections: 8/second
+[INFO     2017-07-12 10:55:32,692 bulkloader.py] Entities inserted/fetched/modified: 20/second
+[INFO     2017-07-12 10:55:32,692 bulkloader.py] Batch Size: 10
+[INFO     2017-07-12 10:55:32,692 bulkloader.py] Opening database: bulkloader-progress-20170712.105532.sql3
+[INFO     2017-07-12 10:55:32,718 bulkloader.py] Opening database: bulkloader-results-20170712.105532.sql3
+[DEBUG    2017-07-12 10:55:32,732 adaptive_thread_pool.py] [WorkerThread-0] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,733 adaptive_thread_pool.py] [WorkerThread-1] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,733 adaptive_thread_pool.py] [WorkerThread-2] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,733 adaptive_thread_pool.py] [WorkerThread-3] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,733 adaptive_thread_pool.py] [WorkerThread-4] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,733 adaptive_thread_pool.py] [WorkerThread-5] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,734 adaptive_thread_pool.py] [WorkerThread-6] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,734 adaptive_thread_pool.py] [WorkerThread-7] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,734 adaptive_thread_pool.py] [WorkerThread-8] WorkerThread: started
+[DEBUG    2017-07-12 10:55:32,734 bulkloader.py] Configuring remote_api. url_path = /_ah/remote_api/, servername = waitlist131.appspot.com
+[DEBUG    2017-07-12 10:55:32,734 adaptive_thread_pool.py] [WorkerThread-9] WorkerThread: started

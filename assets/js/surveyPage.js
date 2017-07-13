@@ -7,6 +7,7 @@ class SurveyPage extends Component{
         super(props);
         this.json = props.json;
         this.userid = props.userid;
+        this.code = props.code;
         Survey.Survey.cssType = "bootstrap";
         Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
         Survey.defaultBootstrapCss.progressBar = "btn-green";
@@ -52,7 +53,8 @@ class SurveyPage extends Component{
             url: "survey/submit",
             data: {
                 json: JSON.stringify(survey.data),
-                userid: this.userid
+                userid: this.userid,
+                code: this.code
             },
             method:"POST",
             cache: false,

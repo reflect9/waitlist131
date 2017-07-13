@@ -53,6 +53,17 @@ em {
   text-align: right;
   background-color: #fff;
 }
+.json_table {
+  font-size: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.email_presentation {
+  border: 1px solid #ddd;
+  overflow: scroll;
+  margin-bottom: 10px;
+}
 .survey_wrapper {
   margin-bottom: 60px;
 }
@@ -66,4 +77,36 @@ em {
 }
 .survey_wrapper .inst-client li img {
   margin: 10px;
+}
+.review_wrapper .user_id_list {
+  height: 100%;
+  /* 100% Full-height */
+  width: 100px;
+  /* 0 width - change this with JavaScript */
+  z-index: 1;
+  /* Stay on top */
+  float: left;
+  background-color: #eaeaea;
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+  padding: 5px;
+  transition: 0.5s;
+  /* 0.5 second transition effect to slide in the sidenav */
+}
+.review_wrapper .user_id_list .users_for_one_code {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #fff;
+  overflow: hidden;
+}
+.review_wrapper .user_id_list .users_for_one_code .userid {
+  cursor: pointer;
+}
+.review_wrapper .user_id_list .users_for_one_code .userid.selected {
+  color: red;
+}
+.review_wrapper .survey_detail {
+  margin-left: 100px;
+  padding: 20px;
+  width: auto;
 }
